@@ -31,8 +31,10 @@
             this.JsonTree = new System.Windows.Forms.TreeView();
             this.MainMnu = new System.Windows.Forms.MenuStrip();
             this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openJsonFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenJsonFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.MainMnu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,18 +60,12 @@
             // 
             this.FileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.refreshFromClipboardToolStripMenuItem,
+            this.openJsonFileToolStripMenuItem,
             this.closeAppToolStripMenuItem});
             this.FileMenuItem.Name = "FileMenuItem";
             this.FileMenuItem.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.FileMenuItem.Size = new System.Drawing.Size(37, 20);
             this.FileMenuItem.Text = "&File";
-            // 
-            // closeAppToolStripMenuItem
-            // 
-            this.closeAppToolStripMenuItem.Name = "closeAppToolStripMenuItem";
-            this.closeAppToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.closeAppToolStripMenuItem.Text = "&Close";
-            this.closeAppToolStripMenuItem.Click += new System.EventHandler(this.closeAppToolStripMenuItem_Click);
             // 
             // refreshFromClipboardToolStripMenuItem
             // 
@@ -78,6 +74,26 @@
             this.refreshFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.refreshFromClipboardToolStripMenuItem.Text = "&Refresh From Clipboard";
             this.refreshFromClipboardToolStripMenuItem.Click += new System.EventHandler(this.refreshFromClipboardToolStripMenuItem_Click);
+            // 
+            // openJsonFileToolStripMenuItem
+            // 
+            this.openJsonFileToolStripMenuItem.Name = "openJsonFileToolStripMenuItem";
+            this.openJsonFileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openJsonFileToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.openJsonFileToolStripMenuItem.Text = "&Open Json File";
+            this.openJsonFileToolStripMenuItem.Click += new System.EventHandler(this.openJsonFileToolStripMenuItem_Click);
+            // 
+            // closeAppToolStripMenuItem
+            // 
+            this.closeAppToolStripMenuItem.Name = "closeAppToolStripMenuItem";
+            this.closeAppToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.closeAppToolStripMenuItem.Text = "&Close";
+            this.closeAppToolStripMenuItem.Click += new System.EventHandler(this.closeAppToolStripMenuItem_Click);
+            // 
+            // OpenJsonFileDialog
+            // 
+            this.OpenJsonFileDialog.DefaultExt = "json";
+            this.OpenJsonFileDialog.Filter = "Json Files (*.json)|*.json|All Files (*.)|*.*";
             // 
             // MainForm
             // 
@@ -104,5 +120,7 @@
         private ToolStripMenuItem FileMenuItem;
         private ToolStripMenuItem closeAppToolStripMenuItem;
         private ToolStripMenuItem refreshFromClipboardToolStripMenuItem;
+        private OpenFileDialog OpenJsonFileDialog;
+        private ToolStripMenuItem openJsonFileToolStripMenuItem;
     }
 }

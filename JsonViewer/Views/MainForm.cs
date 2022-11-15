@@ -4,6 +4,7 @@ using System;
 using System.Text.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace JsonViewer
 {
@@ -16,16 +17,37 @@ namespace JsonViewer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
+            var assembly = Assembly.GetExecutingAssembly();
+            var assemblyVersion = assembly.GetName().Version;
+            Text = $"{Text} {assemblyVersion}";
+
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
+            {
+                string fn = args[1];
+                if (File.Exists(fn))
+                {
+                    LoadJsonFromFile(fn);
+                } // File Exists
+            } // More than the exe file
         }
 
         private void LoadJsonFromFile(string path)
         {
-            using (StreamReader reader = new StreamReader(path))
-            using (JsonTextReader jsonReader = new JsonTextReader(reader))
+            try
             {
-                JToken root = JToken.Load(jsonReader);
-                DisplayTreeView(root, Path.GetFileNameWithoutExtension(path));
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    using (JsonTextReader jsonReader = new JsonTextReader(reader))
+                    {
+                        JToken root = JToken.Load(jsonReader);
+                        DisplayTreeView(root, Path.GetFileNameWithoutExtension(path));
+                    } // using
+                } // using
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -51,7 +73,9 @@ namespace JsonViewer
         private void AddNode(JToken token, TreeNode inTreeNode)
         {
             if (token == null)
+            {
                 return;
+            } // Is null
             if (token is JValue)
             {
                 TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(token.ToString()))];
@@ -93,9 +117,21 @@ TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(str))];
 
         private string CleanUpJson(string src)
         {
-            int first_brace = src.IndexOf("[");
-            int last_brace = src.LastIndexOf("]");
-            string result = src.Substring(first_brace, last_brace - first_brace + 1);
+            int first_bracket = src.IndexOf("[");
+            int first_brace = src.IndexOf("{");
+            int last_bracket = src.LastIndexOf("]");
+            int last_brace = src.LastIndexOf("}");
+
+            int start = Math.Min(first_bracket, first_brace);
+            int end = Math.Max(last_bracket, last_brace);
+
+            if (start < 0 ||
+                end < start)
+            {
+                throw new Exception("The text seems malformed and start and end can't be determined properly.");
+            }
+
+            string result = src.Substring(start, end - start + 1);
             return result;
         }
 
@@ -116,6 +152,16 @@ TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(str))];
         private void closeAppToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void openJsonFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (DialogResult.OK != OpenJsonFileDialog.ShowDialog())
+            {
+                return;
+            } // Cancelled
+                
+                LoadJsonFromFile(OpenJsonFileDialog.FileName);
         }
     }
         }
