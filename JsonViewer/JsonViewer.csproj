@@ -6,11 +6,13 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-	  <VersionPrefix>1.0.22460</VersionPrefix>
+	  <VersionPrefix>1.1.22461</VersionPrefix>
+	  <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="ObjectListView" Version="2.7.1.5" />
   </ItemGroup>
 
 </Project>

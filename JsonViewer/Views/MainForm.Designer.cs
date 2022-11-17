@@ -28,23 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.JsonTree = new System.Windows.Forms.TreeView();
+            this.components = new System.ComponentModel.Container();
             this.MainMnu = new System.Windows.Forms.MenuStrip();
             this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openJsonFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenJsonFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.JsonTree = new BrightIdeasSoftware.TreeListView();
+            this.olvColumnName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.MainMnu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.JsonTree)).BeginInit();
             this.SuspendLayout();
-            // 
-            // JsonTree
-            // 
-            this.JsonTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.JsonTree.Location = new System.Drawing.Point(0, 24);
-            this.JsonTree.Name = "JsonTree";
-            this.JsonTree.Size = new System.Drawing.Size(800, 426);
-            this.JsonTree.TabIndex = 0;
             // 
             // MainMnu
             // 
@@ -95,6 +90,30 @@
             this.OpenJsonFileDialog.DefaultExt = "json";
             this.OpenJsonFileDialog.Filter = "Json Files (*.json)|*.json|All Files (*.)|*.*";
             // 
+            // JsonTree
+            // 
+            this.JsonTree.AllColumns.Add(this.olvColumnName);
+            this.JsonTree.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumnName});
+            this.JsonTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.JsonTree.Location = new System.Drawing.Point(0, 24);
+            this.JsonTree.Name = "JsonTree";
+            this.JsonTree.OwnerDraw = true;
+            this.JsonTree.ShowGroups = false;
+            this.JsonTree.Size = new System.Drawing.Size(800, 426);
+            this.JsonTree.TabIndex = 2;
+            this.JsonTree.View = System.Windows.Forms.View.Details;
+            this.JsonTree.VirtualMode = true;
+            // 
+            // olvColumnName
+            // 
+            this.olvColumnName.AspectName = "Name";
+            this.olvColumnName.IsTileViewColumn = true;
+            this.olvColumnName.Text = "Name";
+            this.olvColumnName.UseInitialLetterForGroup = true;
+            this.olvColumnName.Width = 180;
+            this.olvColumnName.WordWrap = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -108,19 +127,20 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.MainMnu.ResumeLayout(false);
             this.MainMnu.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.JsonTree)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private TreeView JsonTree;
         private MenuStrip MainMnu;
         private ToolStripMenuItem FileMenuItem;
         private ToolStripMenuItem closeAppToolStripMenuItem;
         private ToolStripMenuItem refreshFromClipboardToolStripMenuItem;
         private OpenFileDialog OpenJsonFileDialog;
         private ToolStripMenuItem openJsonFileToolStripMenuItem;
+        private BrightIdeasSoftware.TreeListView JsonTree;
+        private BrightIdeasSoftware.OLVColumn olvColumnName;
     }
 }

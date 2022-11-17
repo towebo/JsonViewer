@@ -5,6 +5,9 @@ using System.Text.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Reflection;
+using System.Collections;
+using System.Linq;
+using System.Media;
 
 namespace JsonViewer
 {
@@ -17,9 +20,21 @@ namespace JsonViewer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            var assemblyVersion = assembly.GetName().Version;
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Version? assemblyVersion = assembly.GetName().Version;
             Text = $"{Text} {assemblyVersion}";
+
+            JsonTree.CanExpandGetter = delegate (object x)
+            {
+                JsonNode? node = x as JsonNode;
+
+                return (node != null) && node.HasChildren;
+            }; // Can Expand
+            JsonTree.ChildrenGetter = delegate (object x)
+            {
+                JsonNode? node = x as JsonNode;
+                return new ArrayList(node .Children);
+            };
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
@@ -56,13 +71,13 @@ namespace JsonViewer
             JsonTree.BeginUpdate();
             try
             {
-                JsonTree.Nodes.Clear();
-                TreeNode tNode = JsonTree.Nodes[JsonTree.Nodes.Add(new TreeNode(rootName))];
-                tNode.Tag = root;
+                JsonNode root_node = new JsonNode(root, rootName);
+                JsonTree.AddObject(root_node);
+                JsonTree.Expand(root_node);
+                Focus();
+                JsonTree.Focus();
 
-                AddNode(root, tNode);
-
-                JsonTree.ExpandAll();
+                SystemSounds.Asterisk.Play();
             }
             finally
             {
@@ -79,6 +94,7 @@ namespace JsonViewer
             if (token is JValue)
             {
                 TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(token.ToString()))];
+                childNode.Name = childNode.Text;
                 childNode.Tag = token;
             }
             else if (token is JObject)
@@ -92,6 +108,7 @@ namespace JsonViewer
 $"{property.Name}: {property.Value}";
 
 TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(str))];
+                    childNode.Name = childNode.Text;
                     childNode.Tag = property;
                     if (has_subchildren)
                     {
@@ -106,6 +123,7 @@ TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(str))];
                 {
                     TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(i.ToString()))];
                     childNode.Tag = array[i];
+                    childNode.Name = childNode.Text;
                     AddNode(array[i], childNode);
                 }
             }
@@ -163,5 +181,12 @@ TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(str))];
                 
                 LoadJsonFromFile(OpenJsonFileDialog.FileName);
         }
+    
+    } // class
+
+    public class ShitItem
+    {
+        public string Name { get; set; }
     }
+
         }
