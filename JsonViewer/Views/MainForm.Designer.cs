@@ -36,7 +36,7 @@
             this.closeAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenJsonFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.JsonTree = new BrightIdeasSoftware.TreeListView();
-            this.olvColumnName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumnName = new BrightIdeasSoftware.OLVColumn();
             this.MainMnu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.JsonTree)).BeginInit();
             this.SuspendLayout();
@@ -92,6 +92,7 @@
             // 
             // JsonTree
             // 
+            this.JsonTree.AccessibleRole = System.Windows.Forms.AccessibleRole.Outline;
             this.JsonTree.AllColumns.Add(this.olvColumnName);
             this.JsonTree.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumnName});
@@ -108,6 +109,7 @@
             // olvColumnName
             // 
             this.olvColumnName.AspectName = "Name";
+            this.olvColumnName.CellPadding = null;
             this.olvColumnName.IsTileViewColumn = true;
             this.olvColumnName.Text = "Name";
             this.olvColumnName.UseInitialLetterForGroup = true;

@@ -66,9 +66,13 @@ namespace JsonViewer
             }
         }
 
-        private void DisplayTreeView(JToken root, string rootName)
+        private void DisplayTreeView(JToken root, string rootName, bool clearExisting = true)
         {
             JsonTree.BeginUpdate();
+            if (clearExisting)
+            {
+                JsonTree.ClearObjects();
+            } // Do clear
             try
             {
                 JsonNode root_node = new JsonNode(root, rootName);
@@ -181,12 +185,19 @@ TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(str))];
                 
                 LoadJsonFromFile(OpenJsonFileDialog.FileName);
         }
-    
-    } // class
 
-    public class ShitItem
-    {
-        public string Name { get; set; }
-    }
+        private void JsonTree_Collapsed(object sender, BrightIdeasSoftware.TreeBranchCollapsedEventArgs e)
+        {
+            ListViewItem lv = new ListViewItem();
+            
+            //e.Model
+
+        }
+
+        private void JsonTree_Expanded(object sender, BrightIdeasSoftware.TreeBranchExpandedEventArgs e)
+        {
+
+        }
+    } // class
 
         }
